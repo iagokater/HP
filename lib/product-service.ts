@@ -28,13 +28,16 @@ const initialProducts: Product[] = [
   },
 ]
 
+// Storage key for products
+const PRODUCTS_STORAGE_KEY = "global_products_data"
+
 // Get products from localStorage or use initial products
 export const getProducts = (): Product[] => {
   if (typeof window === "undefined") return initialProducts
 
-  const storedProducts = localStorage.getItem("products")
+  const storedProducts = localStorage.getItem(PRODUCTS_STORAGE_KEY)
   if (!storedProducts) {
-    localStorage.setItem("products", JSON.stringify(initialProducts))
+    localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(initialProducts))
     return initialProducts
   }
 
@@ -44,5 +47,5 @@ export const getProducts = (): Product[] => {
 // Save products to localStorage
 export const saveProducts = (products: Product[]): void => {
   if (typeof window === "undefined") return
-  localStorage.setItem("products", JSON.stringify(products))
+  localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products))
 }
