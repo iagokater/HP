@@ -28,8 +28,9 @@ const initialProducts: Product[] = [
   },
 ]
 
-// Storage key for products
+// Storage keys
 const PRODUCTS_STORAGE_KEY = "global_products_data"
+const SELECTED_PRODUCTS_KEY = "user_selected_products"
 
 // Get products from localStorage or use initial products
 export const getProducts = (): Product[] => {
@@ -48,4 +49,27 @@ export const getProducts = (): Product[] => {
 export const saveProducts = (products: Product[]): void => {
   if (typeof window === "undefined") return
   localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products))
+}
+
+// Save selected products to localStorage
+export const saveSelectedProducts = (selectedProducts: Map<string, number>): void => {
+  if (typeof window === "undefined") return
+
+  // Convert Map to array for storage
+  const selectedProductsArray = Array.from(selectedProducts.entries())
+  localStorage.setItem(SELECTED_PRODUCTS_KEY, JSON.stringify(selectedProductsArray))
+}
+
+// Get selected products from localStorage
+export const getSelectedProducts = (): Map<string, number> => {
+  if (typeof window === "undefined") return new Map()
+
+  const storedSelectedProducts = localStorage.getItem(SELECTED_PRODUCTS_KEY)
+  if (!storedSelectedProducts) {
+    return new Map()
+  }
+
+  // Convert stored array back to Map
+  const selectedProductsArray = JSON.parse(storedSelectedProducts)
+  return new Map(selectedProductsArray)
 }

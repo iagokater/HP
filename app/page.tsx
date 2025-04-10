@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import ProductCard from "@/components/product-card"
 import TotalSummary from "@/components/total-summary"
 import type { Product } from "@/types/product"
-import { getProducts } from "@/lib/product-service"
+import { getProducts, saveSelectedProducts, getSelectedProducts } from "@/lib/product-service"
 import { Button } from "@/components/ui/button"
 import { Trash2 } from "lucide-react"
 
@@ -19,7 +19,16 @@ export default function Home() {
     // Load products on component mount
     const loadedProducts = getProducts()
     setProducts(loadedProducts)
+
+    // Load selected products
+    const loadedSelectedProducts = getSelectedProducts()
+    setSelectedProducts(loadedSelectedProducts)
   }, [])
+
+  // Save selected products whenever they change
+  useEffect(() => {
+    saveSelectedProducts(selectedProducts)
+  }, [selectedProducts])
 
   const handleQuantityChange = (productId: string, change: number) => {
     setSelectedProducts((prev) => {

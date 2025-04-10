@@ -37,7 +37,7 @@ export default function ProductCard({ product, quantity, onQuantityChange }: Pro
                   >
                     <Minus className="h-4 w-4" />
                   </Button>
-                  <span className="font-medium px-2 min-w-[30px] text-center">{quantity}</span>
+                  <span className="font-medium px-2 min-w-[40px] text-center tabular-nums">{quantity}</span>
                   <Button
                     variant="ghost"
                     size="icon"
